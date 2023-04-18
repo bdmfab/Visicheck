@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.2 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkApplicationWindow" id="appwin">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Visicheck</property>
+    <property name="default_width">800</property>
+    <property name="default_height">600</property>
+    <property name="icon_name">applications-development</property>
+    <signal name="destroy" handler="onDestroy" swapped="no"/>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkBox" id="s1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <property name="baseline_position">top</property>
+        <child>
+          <object class="GtkFixed">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkStackSwitcher" id="ss1">
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">2</property>
+                <property name="margin_right">2</property>
+                <property name="margin_top">2</property>
+                <property name="margin_bottom">2</property>
+                <property name="icon_size">3</property>
+                <property name="stack">stack1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStack" id="stack1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="transition_type">slide-right</property>
+            <child>
+              <object class="GtkFixed" id="main1">
+                <property name="name">pMain</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkButton" id="btnStartFeed">
+                    <property name="label">gtk-connect</property>
+                    <property name="width_request">105</property>
+                    <property name="height_request">50</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Begin video feed from camera</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <signal name="clicked" handler="startFeed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="x">7</property>
+                    <property name="y">14</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">tabHome</property>
+                <property name="icon_name">go-home</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="light1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkEntry" id="tbR">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_text" translatable="yes">Value of red
+0-255</property>
+                    <property name="max_length">3</property>
+                    <property name="width_chars">3</property>
+                    <property name="max_width_chars">3</property>
+                    <property name="placeholder_text" translatable="yes">0</property>
+                    <property name="input_purpose">digits</property>
+                  </object>
+                  <packing>
+                    <property name="x">63</property>
+                    <property name="y">15</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Red</property>
+                    <property name="justify">right</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Bold 12"/>
+                      <attribute name="foreground" value="#efef29292929"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="x">30</property>
+                    <property name="y">20</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Green</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Bold 12"/>
+                      <attribute name="foreground" value="#7373d2d21616"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="x">14</property>
+                    <property name="y">50</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="tbG">
+                    <property name="width_request">42</property>
+                    <property name="height_request">27</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_text" translatable="yes">Value of green
+0-255</property>
+                    <property name="max_length">3</property>
+                    <property name="width_chars">3</property>
+                    <property name="max_width_chars">3</property>
+                    <property name="placeholder_text" translatable="yes">0</property>
+                    <property name="input_purpose">digits</property>
+                  </object>
+                  <packing>
+                    <property name="x">63</property>
+                    <property name="y">45</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnApply">
+                    <property name="label">gtk-apply</property>
+                    <property name="width_request">90</property>
+                    <property name="height_request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
+                    <signal name="clicked" handler="colorChange" object="light1" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="x">128</property>
+                    <property name="y">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="width_request">34</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Blue</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Bold 12"/>
+                      <attribute name="foreground" value="#34346565a4a4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="x">24</property>
+                    <property name="y">79</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="tbB">
+                    <property name="width_request">42</property>
+                    <property name="height_request">27</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_text" translatable="yes">Value of blue
+0-255</property>
+                    <property name="max_length">3</property>
+                    <property name="width_chars">3</property>
+                    <property name="max_width_chars">3</property>
+                    <property name="placeholder_text" translatable="yes">0</property>
+                    <property name="input_purpose">digits</property>
+                  </object>
+                  <packing>
+                    <property name="x">63</property>
+                    <property name="y">75</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">tabLC</property>
+                <property name="icon_name">weather-clear</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="cam1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="name">tabCam</property>
+                <property name="icon_name">camera-photo</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="set1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="name">tabSettings</property>
+                <property name="icon_name">applications-engineering</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
