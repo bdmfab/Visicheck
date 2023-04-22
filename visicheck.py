@@ -5,6 +5,9 @@ import time
 import board
 import neopixel
 
+
+gi.require_version('Gdk', '3.0')
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -29,7 +32,22 @@ class Handler:
         #print("Green = " + valg)   
         valb = builder.get_object("tbB").get_text()
         #print("Blue = " + valb)
-        LED_Update(int(valr), int(valg), int(valb))
+        #LED_Update(int(valr), int(valg), int(valb))
+        fR = int(valr)/255
+        fG = int(valg)/255
+        fB = int(valb)/255
+        cC = builder.get_object("colorChooser")        
+        cC.set_rgba(Gdk.RGBA(fR, fG, fB, 1)) 
+
+    def onColor(self, widget):
+        vals = widget.get_rgba() 
+        r = int(vals.red * 255)
+        b = int(vals.blue * 255)    
+        g = int(vals.green * 255)
+        #print("Red = " + str(r) + " Green = " + str(g) + " Blue = " + str(b))
+        builder.get_object("tbR").set_text(str(r))
+        builder.get_object("tbG").set_text(str(g))
+        builder.get_object("tbB").set_text(str(b))
 
 
 builder = Gtk.Builder()
