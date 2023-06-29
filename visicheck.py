@@ -6,7 +6,7 @@ import board
 import neopixel
 import numpy as np
 import cv2
-import math, copy, time, logging, sys
+import math, copy, time, logging, sys, pickle
 
 gi.require_version('Gdk', '3.0')
 gi.require_version("Gtk", "3.0")
@@ -320,6 +320,19 @@ class Handler:
         self.saveRef = False
 
     def onDestroy(self, *args):
+        settings = { "blobLL": builder.get_object("sclBlobLL").get_value(),
+                     "blobHL": builder.get_object("sclBlobHL").get_value(),
+                     "threshLL": builder.get_object("threshLL").get_value(),
+                     "threshHL": builder.get_object("threshHL").get_value(),
+                     "edgeLL": builder.get_object("edgeLL").get_value(),
+                     "edgeHL": builder.get_object("edgeHL").get_value(),
+                     "edgeK": builder.get_object("edgeK").get_value(),
+                     "edgeGaus": builder.get_object("edgeGausian").get_active(),
+                     "red": builder.get_object("tbR").get_text(),
+                     "blue": builder.get_object("tbB").get_text(),
+                     "green": builder.get_object("tbG").get_text()
+        }
+        pickle.dump(settings, open( "save.p", "wb"))
         Gtk.main_quit()
 
     def startFeed(self, button):       
@@ -340,7 +353,7 @@ class Handler:
         cC = builder.get_object("cp1")        
         cC.set_rgba(Gdk.RGBA(fR, fG, fB, 1)) 
 
-    # updates and converts vales in fields from color picker
+    # updates and converts values in fields from color picker
     def onColor(self, widget):
         vals = widget.get_rgba() 
         r = int(vals.red * 255)
@@ -429,11 +442,29 @@ class Handler:
     def onOrb(self, widget):
         orb(self)
 
-    def onScaleTest(self, widget):
-        val1 = int(builder.get_object("sclTempLL").get_value())
-        val2 = int(builder.get_object("sclTempHL").get_value())
-        print("Val1 = " + str(val1))
-        print("Val2 = " + str(val2))
+    def onSetVal(self, widget):
+        pass 
+
+    def onVis(self, widget, arg):
+        settings = pickle.load( open( "save.p", "rb"))
+        print(settings)
+        builder.get_object("sclBlobLL").set_value(settings["blobLL"])
+        builder.get_object("sclBlobHL").set_value(settings["blobHL"])
+        builder.get_object("threshLL").set_value(settings["threshLL"])
+        builder.get_object("threshHL").set_value(settings["threshHL"])
+        builder.get_object("edgeLL").set_value(settings["edgeLL"])
+        builder.get_object("edgeHL").set_value(settings["edgeHL"])
+        builder.get_object("edgeK").set_value(settings["edgeK"])
+        builder.get_object("edgeGausian").set_active(settings["edgeGaus"]) 
+        builder.get_object("tbR").set_text(settings["red"])
+        builder.get_object("tbB").set_text(settings["blue"]) 
+        builder.get_object("tbG").set_text(settings["green"])
+
+        fR = int(settings["red"])/255
+        fG = int(settings["green"])/255
+        fB = int(settings["blue"])/255
+        cC = builder.get_object("cp1")        
+        cC.set_rgba(Gdk.RGBA(fR, fG, fB, 1))  
 
 
 builder = Gtk.Builder()
