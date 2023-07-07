@@ -298,6 +298,44 @@ def orb(self):
         img2 = cv2.drawKeypoints(img, kp, None, color=(0,255,0), flags=0)
         cv2.imshow("Keypoints", img2)
 
+def saveSettings(p=""):
+        settings = { "blobLL": builder.get_object("sclBlobLL").get_value(),
+                     "blobHL": builder.get_object("sclBlobHL").get_value(),
+                     "threshLL": builder.get_object("threshLL").get_value(),
+                     "threshHL": builder.get_object("threshHL").get_value(),
+                     "edgeLL": builder.get_object("edgeLL").get_value(),
+                     "edgeHL": builder.get_object("edgeHL").get_value(),
+                     "edgeK": builder.get_object("edgeK").get_value(),
+                     "edgeGaus": builder.get_object("edgeGausian").get_active(),
+                     "red": builder.get_object("tbR").get_text(),
+                     "blue": builder.get_object("tbB").get_text(),
+                     "green": builder.get_object("tbG").get_text()
+        }
+        profile = "save.p" + p
+        pickle.dump(settings, open( profile, "wb"))   
+
+def loadSettings(p=""):
+        profile = "save.p" + p
+        settings = pickle.load( open( profile, "rb"))
+        #print(settings)
+        builder.get_object("sclBlobLL").set_value(settings["blobLL"])
+        builder.get_object("sclBlobHL").set_value(settings["blobHL"])
+        builder.get_object("threshLL").set_value(settings["threshLL"])
+        builder.get_object("threshHL").set_value(settings["threshHL"])
+        builder.get_object("edgeLL").set_value(settings["edgeLL"])
+        builder.get_object("edgeHL").set_value(settings["edgeHL"])
+        builder.get_object("edgeK").set_value(settings["edgeK"])
+        builder.get_object("edgeGausian").set_active(settings["edgeGaus"]) 
+        builder.get_object("tbR").set_text(settings["red"])
+        builder.get_object("tbB").set_text(settings["blue"]) 
+        builder.get_object("tbG").set_text(settings["green"])
+
+        fR = int(settings["red"])/255
+        fG = int(settings["green"])/255
+        fB = int(settings["blue"])/255
+        cC = builder.get_object("cp1")        
+        cC.set_rgba(Gdk.RGBA(fR, fG, fB, 1))             
+
 class Handler:
 
     def __init__(self):
@@ -320,20 +358,8 @@ class Handler:
         self.saveRef = False
 
     def onDestroy(self, *args):
-        settings = { "blobLL": builder.get_object("sclBlobLL").get_value(),
-                     "blobHL": builder.get_object("sclBlobHL").get_value(),
-                     "threshLL": builder.get_object("threshLL").get_value(),
-                     "threshHL": builder.get_object("threshHL").get_value(),
-                     "edgeLL": builder.get_object("edgeLL").get_value(),
-                     "edgeHL": builder.get_object("edgeHL").get_value(),
-                     "edgeK": builder.get_object("edgeK").get_value(),
-                     "edgeGaus": builder.get_object("edgeGausian").get_active(),
-                     "red": builder.get_object("tbR").get_text(),
-                     "blue": builder.get_object("tbB").get_text(),
-                     "green": builder.get_object("tbG").get_text()
-        }
-        pickle.dump(settings, open( "save.p", "wb"))
-        Gtk.main_quit()
+        saveSettings()
+        Gtk.main_quit() 
 
     def startFeed(self, button):       
         connectBtn(self)
@@ -446,26 +472,23 @@ class Handler:
         pass 
 
     def onVis(self, widget, arg):
-        settings = pickle.load( open( "save.p", "rb"))
-        print(settings)
-        builder.get_object("sclBlobLL").set_value(settings["blobLL"])
-        builder.get_object("sclBlobHL").set_value(settings["blobHL"])
-        builder.get_object("threshLL").set_value(settings["threshLL"])
-        builder.get_object("threshHL").set_value(settings["threshHL"])
-        builder.get_object("edgeLL").set_value(settings["edgeLL"])
-        builder.get_object("edgeHL").set_value(settings["edgeHL"])
-        builder.get_object("edgeK").set_value(settings["edgeK"])
-        builder.get_object("edgeGausian").set_active(settings["edgeGaus"]) 
-        builder.get_object("tbR").set_text(settings["red"])
-        builder.get_object("tbB").set_text(settings["blue"]) 
-        builder.get_object("tbG").set_text(settings["green"])
+        loadSettings()  
 
-        fR = int(settings["red"])/255
-        fG = int(settings["green"])/255
-        fB = int(settings["blue"])/255
-        cC = builder.get_object("cp1")        
-        cC.set_rgba(Gdk.RGBA(fR, fG, fB, 1))  
+    def on_cbx1_changed(self, widget):  
+        item = widget.get_text() 
+        val = builder.get_object("cbx1").get_active()  
+        print(item + " & " + str(val))
 
+    def on_btnSave(self, widget):
+        val = builder.get_object("cbx1").get_active()
+        if (val > -1):
+            saveSettings(str(val))
+
+    def on_btnLoad(self, widget):
+        val = builder.get_object("cbx1").get_active()
+        if (val > -1):
+            loadSettings(str(val)) 
+            
 
 builder = Gtk.Builder()
 builder.add_from_file("visicheck.glade")
